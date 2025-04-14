@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 st.set_page_config(page_title="Feasibility + Deal Splits Merger", layout="centered")
-st.title("🧩 Merge Feasibility Report with HubSpot Deal Splits")
+st.title("Merge Feasibility Report with HubSpot Deal Splits")
 
 st.write("""
 Upload your **Feasibility** report from Sage Intacct and your **HubSpot** Deal Splits report.

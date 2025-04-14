@@ -36,7 +36,7 @@ if feasibility_file and hubspot_file:
 
         merged_df.drop(columns=['Intacct Project ID'], inplace=True)
 
-        st.success("✅ Merging complete! Preview below:")
+        st.success("✅ Merging complete! See preview below:")
         st.dataframe(merged_df.head(20))
 
         # Download

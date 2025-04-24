@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 st.set_page_config(page_title="Feasibility + Deal Splits Merger", layout="centered")
-st.title("Merge Feasibility Report with HubSpot Deal Splits")
+st.title("🧩 Merge Feasibility Report with HubSpot Deal Splits")
 
 st.write("""
 Upload your **Feasibility** report from Sage Intacct and your **HubSpot** Deal Splits report.
@@ -17,24 +17,32 @@ if feasibility_file and hubspot_file:
         feasibility_df = pd.read_excel(feasibility_file)
         hubspot_df = pd.read_excel(hubspot_file)
 
+        # Normalize column names
+        feasibility_df.columns = feasibility_df.columns.str.strip().str.lower()
+        hubspot_df.columns = hubspot_df.columns.str.strip().str.lower()
+
+        # Display for debugging
+        st.write("Feasibility Columns:", list(feasibility_df.columns))
+        st.write("HubSpot Columns:", list(hubspot_df.columns))
+
         # Normalize keys
-        feasibility_df['Project ID'] = feasibility_df['Project ID'].astype(str).str.strip()
-        hubspot_df['Intacct Project ID'] = hubspot_df['Intacct Project ID'].astype(str).str.strip()
+        feasibility_df['project id'] = feasibility_df['project id'].astype(str).str.strip()
+        hubspot_df['intacct project id'] = hubspot_df['intacct project id'].astype(str).str.strip()
 
         # Filter relevant columns from HubSpot
         hubspot_trimmed = hubspot_df[[
-            'Intacct Project ID', 'Deal split amount', 'Deal Split Percentage', 'Deal Split Owner']]
+            'intacct project id', 'deal split amount', 'deal split percentage', 'deal split owner']]
 
         # Merge
         merged_df = pd.merge(
             feasibility_df,
             hubspot_trimmed,
             how='left',
-            left_on='Project ID',
-            right_on='Intacct Project ID'
+            left_on='project id',
+            right_on='intacct project id'
         )
 
-        merged_df.drop(columns=['Intacct Project ID'], inplace=True)
+        merged_df.drop(columns=['intacct project id'], inplace=True)
 
         st.success("✅ Merging complete! Preview below:")
         st.dataframe(merged_df.head(20))

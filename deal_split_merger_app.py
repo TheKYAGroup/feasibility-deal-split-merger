@@ -21,10 +21,6 @@ if feasibility_file and hubspot_file:
         feasibility_df.columns = feasibility_df.columns.str.strip().str.lower()
         hubspot_df.columns = hubspot_df.columns.str.strip().str.lower()
 
-        # Display for debugging
-        st.write("Feasibility Columns:", list(feasibility_df.columns))
-        st.write("HubSpot Columns:", list(hubspot_df.columns))
-
         # Normalize keys
         feasibility_df['project id'] = feasibility_df['project id'].astype(str).str.strip()
         hubspot_df['intacct project id'] = hubspot_df['intacct project id'].astype(str).str.strip()
